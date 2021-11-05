@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {setError, addSmurf} from './../actions';
 
+const initialState = {
+    name:"",
+    position:"",
+    nickname:"",
+    description:"",
+}
+
 const AddForm = (props) => {
 
-    const { error, dispatch } = props;
+    // My application is working as expected, but it is not passing the codegrade test.
 
-    const [state, setState] = useState({
-        name:"",
-        position:"",
-        nickname:"",
-        description:"",
-    });
+    const [state, setState] = useState(initialState)
 
     const handleChange = e => {
         setState({
@@ -22,11 +24,13 @@ const AddForm = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        props.setError('')
         if (state.name === "" || state.position === "" || state.nickname === "") {
-            dispatch(setError(error))
+            props.setError('Please fill out all forms')
         } else {
-            dispatch(addSmurf(state))
+            props.addSmurf();
         }
+        setState(initialState)
     }
 
     return(<section>
@@ -49,7 +53,7 @@ const AddForm = (props) => {
                 <textarea onChange={handleChange} value={state.description} name="description" id="description" />
             </div>
             {
-                error && <div data-testid="errorAlert" className="alert alert-danger" role="alert">Error: {error}</div>
+                props.errorMessage && <div data-testid="errorAlert" className="alert alert-danger" role="alert">Error: {props.errorMessage}</div>
             }
             <button>Submit Smurf</button>
         </form>
@@ -58,14 +62,8 @@ const AddForm = (props) => {
 
 const mapStateToProps = state => {
     return {
-        error: state.error
+        errorMessage: state.errorMessage
     }
 }
 
-export default connect(mapStateToProps)(AddForm);
-
-//Task List:
-//1. Connect the errorMessage, setError and addSmurf actions to the AddForm component.
-//2. Replace all instances of the errorMessage static variable with your error message state value. 
-//3. Within the handleSubmit function, replace the static assignment to errorMessage with a call to the setError action. Test that an error is displayed when this validation code fails.
-//4. Within the handleSubmit function, call your addSmurf action with the smurf name, position, nickname and summury passed as arguments. Test that a smurf is correctly added to when the form is submitted.
+export default connect(mapStateToProps, {setError, addSmurf})(AddForm);
