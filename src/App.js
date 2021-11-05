@@ -9,6 +9,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 
 class App extends Component {
+  
+  componentDidMount() {
+    this.props.dispatch(fetchSmurfs())
+  }
+
   render() {
     return (
       <div className="App">
@@ -25,7 +30,7 @@ class App extends Component {
   }
 }
 
-export default connect(null, {fetchSmurfs})(App);
+export default connect(null)(App);
 
 //Task List:
 //1. Connect the fetchSmurfs actions to the App component.

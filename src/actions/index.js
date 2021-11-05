@@ -6,17 +6,6 @@ export const FETCH_ERROR = 'FETCH_ERROR';
 export const ADD_SMURF = 'ADD_SMURF';
 export const SET_ERROR = 'SET_ERROR';
 
-// axios.get('http://localhost:3333/smurfs')
-//         .then(response => {
-//             console.log(response)
-//             // dispatch(fetchSuccess(response.data))
-//         })
-//         .catch(error => {
-//             console.error(error)
-//             // dispatch(fetchError(error))
-//         })
-    
-
 export const fetchSmurfs = () => {
     return (dispatch) => {
         dispatch(fetchStart());
@@ -46,8 +35,8 @@ export const addSmurf = (smurf) => {
     return({type: ADD_SMURF, payload: smurf});
 }
 
-export const setError = (message) => {
-    return({type: SET_ERROR, payload: message});
+export const setError = () => {
+    return({type: SET_ERROR});
 }
 
 //Task List:

@@ -4,13 +4,13 @@ import {setError, addSmurf} from './../actions';
 
 const AddForm = (props) => {
 
-    const { error } = props;
+    const { error, dispatch } = props;
 
     const [state, setState] = useState({
         name:"",
         position:"",
         nickname:"",
-        description:""
+        description:"",
     });
 
     const handleChange = e => {
@@ -23,9 +23,10 @@ const AddForm = (props) => {
     const handleSubmit = e => {
         e.preventDefault();
         if (state.name === "" || state.position === "" || state.nickname === "") {
-            setError(error)
+            dispatch(setError())
+        } else {
+            dispatch(addSmurf(state))
         }
-        props.addSmurf(state)
     }
 
     return(<section>
@@ -55,13 +56,13 @@ const AddForm = (props) => {
     </section>);
 }
 
-const mapStateToProps = state => {
-    return {
-        error: state.error
-    }
-}
+// const mapStateToProps = state => {
+//     return {
+//         error: state.error
+//     }
+// }
 
-export default connect(mapStateToProps, {setError, addSmurf})(AddForm);
+export default connect(null)(AddForm);
 
 //Task List:
 //1. Connect the errorMessage, setError and addSmurf actions to the AddForm component.

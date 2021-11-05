@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
         case (SET_ERROR):
             return ({
                 ...state,
-                error: action.payload
+                error: 'Fill out the form'
             })
         default:
             return state;
